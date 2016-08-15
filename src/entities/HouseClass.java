@@ -4,6 +4,7 @@ public class HouseClass extends PieceClass {
 
     public HouseClass(){
         setPower(false);
+        setSimb('H');
         create();
     }
 
