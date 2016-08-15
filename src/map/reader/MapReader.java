@@ -5,14 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-import entities.House;
-import entities.Piece;
+import entities.*;
 import main.*;
 
 public class MapReader {
-	
-	private static final int MAX_COLUMNS = 10;
-	private static final int MAX_LINES = 10;
 	
 	private static final char HOUSE = 'H';
 	private static final char HOUSE_ = 'h';
@@ -24,15 +20,13 @@ public class MapReader {
 	private static final char T_TYPE_ = 't';
 	private static final char LINE = '.';
 	
-	private String fileName;
-	private boolean validMap;
 	private InputStream file;
 	private int numCols;
 	private int numLines;
+	private GameMap map;
 	
 	
 	public MapReader(String fileName) throws FileNotFoundException, SecurityException {
-		this.fileName = fileName;
 		file = new FileInputStream(fileName);
 		createMap(file);
 	}
@@ -48,25 +42,44 @@ public class MapReader {
 			e.printStackTrace();
 		}
 		
-		GameMap map = new GameMapClass(numCols, numLines);
+		map = new GameMapClass(numCols, numLines);
+		Piece[] pieces = new Piece[numCols];
 		
 		for(int i = 0; i < numLines; i++){
 			String line = input.nextLine();
-			Piece[] pieces = new Piece[numCols];
 			
 			for(int j = 0; j < numCols; j++){
 				pieces[j] = resolvePiece(line.charAt(j));
 			}
+			
+			map.populateLine(pieces);
+			
 		}
 		
 		input.close();
 	}
 	
 	private Piece resolvePiece(char c){
+		Piece ret = new PieceClass();
+		
 		switch(c){
 			case HOUSE:
-			case HOUSE_: return new House();
+			case HOUSE_: ret = new HouseClass(); break;
+			case POWER:
+			case POWER_: ret = new PowerClass();  break;
+			case ELBOW:
+			case ELBOW_: ret = new GridClass(c); break;
+			case T_TYPE:
+			case T_TYPE_: ret = new GridClass(c); break;
+			case LINE: ret = new GridClass(c); break;
 		}
+		
+		return ret;
+	}
+	
+
+	public GameMap getMap(){
+		return map;
 	}
 	
 }

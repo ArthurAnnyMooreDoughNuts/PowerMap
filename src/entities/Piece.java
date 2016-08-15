@@ -1,47 +1,20 @@
 package entities;
 
-public class Piece {
+public interface Piece {
 
-    protected static final int LEFT = Level.LEFT;
-    protected static final int UP = Level.UP;
-    protected static final int RIGHT = Level.RIGHT;
-    protected static final int DOWN = Level.DOWN;
-
-    protected char simb;                             //Guarda o simbulo da peça para ser usado ao desenhar o jogo, e tbm para verificar que tipo de peça é
-    protected boolean power;
-    public boolean dir[] = new boolean[4];           //Array boolean que guarda em que posições(esquerda, cima, direita, baixo) existem ligações
-
-    public void turn(){                              //Vira a peça 90º para a direita
-        boolean state;
-
-        state = dir[DOWN];
-
-        for(int i = 3; i>0; i--){
-            dir[i] = dir[i-1];
-        }
-
-        dir[LEFT] = state;
-    }
-
-    protected void setRandomPos(){                 //Vira a peça um numeo aleatório de vezes quando é criada
-        int r = (int)(Math.random()*10) %4;
-        for(int i = 0; i<r; i++) {
-            turn();
-        }
-    }
-
-    public char getSimb(){
-        return simb;
-    }
-
-    public boolean getDir(int x) {
-        return dir[x];
-    }
-
-    public boolean getPower(){
-        return power;
-    }
-    public void setPower(boolean b){
-        power = b;
-    }
+	public static final int LEFT = LevelClass.LEFT;
+    public static final int UP = LevelClass.UP;
+    public static final int RIGHT = LevelClass.RIGHT;
+    public static final int DOWN = LevelClass.DOWN;
+    
+    public char getSimb();
+    public void setSimb(char simb);
+    public boolean getPower();
+    public void setPower(boolean b);
+    public boolean getDir(int x);
+    public void setDir(int x, boolean a);
+    
+    public void turn();
+    public void setRandomPos();
+	
 }

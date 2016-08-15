@@ -4,12 +4,12 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 
-public class Level {
+public class LevelClass {
 
     public static final int LEFT = 0, UP = 1, RIGHT = 2, DOWN = 3;                  //Estas variaveis são posições no array dir[] que cada peça possui, sendo que a 1º posição corresponde
                                                                                     //á esquerda (em relação ao centro da peça) e a ultima a baixo do centro
     private int maxLines = 0, maxCols = 0;
-    public Piece[][] pieces;
+    public PieceClass[][] pieces;
 
     public void load(InputStream file) {
         Scanner input = new Scanner(file);
@@ -33,7 +33,7 @@ public class Level {
             }
         }
 
-        pieces = new Piece[maxCols][maxLines];
+        pieces = new PieceClass[maxCols][maxLines];
 
         for (int i = 0; i<maxLines; i++){        //Loop para ler as linhas do jogo
             line = input.nextLine();
@@ -41,19 +41,19 @@ public class Level {
                 c = line.charAt(j);
                 switch (c){
                     case 'H':
-                        pieces[i][j] = new House();
+                        pieces[i][j] = new HouseClass();
                         break;
                     case 'P':
-                        pieces[i][j] = new Power();
+                        pieces[i][j] = new PowerClass();
                         break;
                     case 'c':
-                        pieces[i][j] = new Grid(c);
+                        pieces[i][j] = new GridClass(c);
                         break;
                     case 'T':
-                        pieces[i][j] = new Grid(c);
+                        pieces[i][j] = new GridClass(c);
                         break;
                     case '.':
-                        pieces[i][j] = new Grid(c);
+                        pieces[i][j] = new GridClass(c);
                         break;
                     default:
                         pieces[i][j] = null;
