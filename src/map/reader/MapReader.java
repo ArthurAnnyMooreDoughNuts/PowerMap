@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import entities.House;
 import entities.Piece;
 import main.*;
 
@@ -19,7 +20,9 @@ public class MapReader {
 	private static final char POWER_ = 'p';
 	private static final char ELBOW = 'C';
 	private static final char ELBOW_ = 'c';
-	private static final char
+	private static final char T_TYPE = 'T';
+	private static final char T_TYPE_ = 't';
+	private static final char LINE = '.';
 	
 	private String fileName;
 	private boolean validMap;
@@ -61,7 +64,8 @@ public class MapReader {
 	
 	private Piece resolvePiece(char c){
 		switch(c){
-			case 
+			case HOUSE:
+			case HOUSE_: return new House();
 		}
 	}
 	
