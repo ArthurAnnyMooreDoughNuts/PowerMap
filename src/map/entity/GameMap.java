@@ -1,4 +1,4 @@
-package main;
+package map.entity;
 
 import entities.Piece;
 
