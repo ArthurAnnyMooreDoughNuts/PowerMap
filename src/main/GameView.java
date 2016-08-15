@@ -5,12 +5,12 @@ import entities.LevelClass;
 
 public class GameView {
 
-    private static final int LEFT = Level.LEFT;
-    private static final int UP = Level.UP;
-    private static final int RIGHT = Level.RIGHT;
-    private static final int DOWN = Level.DOWN;
+    private static final int LEFT = LevelClass.LEFT;
+    private static final int UP = LevelClass.UP;
+    private static final int RIGHT = LevelClass.RIGHT;
+    private static final int DOWN = LevelClass.DOWN;
 
-    public void draw(Level level){
+    public void draw(LevelClass level){
         int lines = level.getLines();
         int cols = level.getCols();
 

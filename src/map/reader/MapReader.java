@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 import entities.*;
-import main.*;
 import map.entity.GameMap;
 import map.entity.GameMapClass;
 
