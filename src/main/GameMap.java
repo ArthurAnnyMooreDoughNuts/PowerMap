@@ -1,6 +1,6 @@
 package main;
 
-public interface Map {
+public interface GameMap {
 
 	
 	
