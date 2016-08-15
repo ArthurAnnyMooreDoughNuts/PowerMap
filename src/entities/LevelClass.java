@@ -9,7 +9,7 @@ public class LevelClass {
     public static final int LEFT = 0, UP = 1, RIGHT = 2, DOWN = 3;                  //Estas variaveis são posições no array dir[] que cada peça possui, sendo que a 1º posição corresponde
                                                                                     //á esquerda (em relação ao centro da peça) e a ultima a baixo do centro
     private int maxLines = 0, maxCols = 0;
-    public PieceClass[][] pieces;
+    public Piece[][] pieces;
 
     public void load(InputStream file) {
         Scanner input = new Scanner(file);
@@ -35,9 +35,9 @@ public class LevelClass {
 
         pieces = new PieceClass[maxCols][maxLines];
 
-        for (int i = 0; i<maxLines; i++){        //Loop para ler as linhas do jogo
+        for (int i = 0; i < maxLines; i++){        //Loop para ler as linhas do jogo
             line = input.nextLine();
-            for(int j = 0; j<maxCols; j++){      //Loop para ler elementos de cada linha
+            for(int j = 0; j < maxCols; j++){      //Loop para ler elementos de cada linha
                 c = line.charAt(j);
                 switch (c){
                     case 'H':
@@ -61,6 +61,8 @@ public class LevelClass {
                 }
             }
         }
+        
+        input.close();
     }
 
     private void updatePowerLine(int i, int j){                                                                //Este metodo faz update da energia nas peças atraves de ramos, começando na fonte
