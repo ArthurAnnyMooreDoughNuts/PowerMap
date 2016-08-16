@@ -105,7 +105,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 			nums[i-1] = new Integer(i);
 		}
 		
-		JLabel label = new JLabel("Lines:");
+		JLabel label = new JLabel("Lines: (min 4)");
 		add(label);
 		
 		JComboBox<Integer> cols = new JComboBox<Integer>(nums);
@@ -124,7 +124,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		
 		setVisible(true);
 		
-		while(elements[0] <= 0){
+		while(elements[0] < 4){
 			try{
 				Thread.sleep(200);
 			} catch(InterruptedException e){
@@ -134,7 +134,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		setVisible(false);
 		getContentPane().removeAll();
 		
-		label.setText("Columns:");
+		label.setText("Columns: (min 4)");
 		add(label);
 		
 		JComboBox<Integer> lines = new JComboBox<Integer>(nums);
@@ -153,7 +153,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		
 		setVisible(true);
 		
-		while(elements[1] <= 0){
+		while(elements[1] < 4){
 			try{
 				Thread.sleep(200);
 			} catch(InterruptedException e){

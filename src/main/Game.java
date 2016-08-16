@@ -96,18 +96,9 @@ public class Game {
         level.updatePower();
         view.draw(level);
         Console.mouseClick(true);
-
+        
         do{
-            key = Console.waitKeyPressed(0);
-            if(key == Console.MOUSE_CLICKED){
-                processClick(Console.getMouseClick());
-                level.updatePower();
-                view.draw(level);
-            }
-
-
-
-            if(level.checkPower()){
+        	if(level.checkPower()){
 
                 Console.color(Console.BLACK,Console.WHITE);
                 Console.cursor(0, level.getCols()*3/2-4);
@@ -115,6 +106,13 @@ public class Game {
                 Console.waitChar(0);
                 break;
 
+            }
+        	
+            key = Console.waitKeyPressed(0);
+            if(key == Console.MOUSE_CLICKED){
+                processClick(Console.getMouseClick());
+                level.updatePower();
+                view.draw(level);
             }
 
         }while(key != KeyEvent.VK_ESCAPE);
