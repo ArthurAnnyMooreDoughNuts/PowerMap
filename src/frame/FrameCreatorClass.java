@@ -1,5 +1,6 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -90,7 +92,8 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(false);
 		setResizable(false);
-		setLayout(new GridLayout(2, 1));
+		getRootPane().setBorder(BorderFactory.createMatteBorder(8, 8, 8, 8, Color.WHITE));
+		setLayout(new GridLayout(3, 1));
 		
 		int[] elements = new int[2];
 		elements[0] = 0;
@@ -101,6 +104,9 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		for(int i = 1; i < 11; i++){
 			nums[i-1] = new Integer(i);
 		}
+		
+		JLabel label = new JLabel("Lines:");
+		add(label);
 		
 		JComboBox<Integer> cols = new JComboBox<Integer>(nums);
 		cols.setEditable(false);
@@ -125,7 +131,11 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 			}
 		}
 		
+		setVisible(false);
 		getContentPane().removeAll();
+		
+		label.setText("Columns:");
+		add(label);
 		
 		JComboBox<Integer> lines = new JComboBox<Integer>(nums);
 		lines.setEditable(false);
@@ -175,6 +185,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		setVisible(false);
 		setResizable(false);
 		setLayout(new GridLayout(3, 1));
+		getRootPane().setBorder(BorderFactory.createMatteBorder(8, 8, 8, 8, Color.WHITE));
 		getContentPane().removeAll();
 		
 		
