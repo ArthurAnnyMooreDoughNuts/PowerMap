@@ -20,6 +20,7 @@ public class FrameClass extends JFrame implements ActionListener{
 	
 	public FrameClass(){
 		super("PowerMap");
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(false);
 		setResizable(false);

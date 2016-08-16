@@ -34,6 +34,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		super("PowerMap Creator");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(false);
+		setLocationRelativeTo(null);
 		setResizable(false);
 		
 		int[] nums = getNumElements();

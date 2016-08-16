@@ -18,6 +18,7 @@ public class FrameMenuClass extends JFrame implements ActionListener{
 	public FrameMenuClass(){
 		super("PowerMap");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 		setVisible(false);
 		setResizable(false);
 		getRootPane().setBorder(BorderFactory.createMatteBorder(8, 8, 8, 8, Color.WHITE));
