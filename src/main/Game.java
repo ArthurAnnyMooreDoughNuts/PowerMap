@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import entities.LevelClass;
 import isel.leic.pg.Console;
 import isel.leic.pg.Location;

@@ -1,8 +1,6 @@
 package entities;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Scanner;
 
 import map.entity.GameMap;
 import map.reader.MapReader;
