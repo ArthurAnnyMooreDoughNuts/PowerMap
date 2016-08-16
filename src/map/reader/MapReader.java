@@ -21,14 +21,12 @@ public class MapReader {
 	private static final char T_TYPE_ = 't';
 	private static final char LINE = '.';
 	
-	private InputStream file;
 	private int numCols;
 	private int numLines;
 	private GameMap map;
 	
 	
-	public MapReader(String fileName) throws FileNotFoundException, SecurityException {
-		file = new FileInputStream(fileName);
+	public MapReader(InputStream file){
 		createMap(file);
 	}
 	
