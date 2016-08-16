@@ -7,6 +7,8 @@ import java.io.InputStream;
 
 import entities.LevelClass;
 import frame.FrameClass;
+import frame.FrameCreatorClass;
+import frame.FrameMenuClass;
 import isel.leic.pg.Console;
 import isel.leic.pg.Location;
 
@@ -21,11 +23,33 @@ public class Game {
 
     public static void main(String[] args){
         Game game = new Game();
-        InputStream file = game.getMapFile();
-        
-        
-        if(game.loadLevel(file)){
-            game.run();
+        game.menu();
+    }
+    
+    private void menu(){
+    	FrameMenuClass menu = new FrameMenuClass();
+    	int option = menu.getOption();
+    	menu.dispose();
+    	
+    	switch(option){
+    		case 1: play(); break;
+    		case 2: load(); break;
+    		case 3: create(); break;
+    	}
+    	
+    }
+    
+    private void play(){
+    	InputStream file = null;
+    	
+    	try{
+    		file = new FileInputStream("Map.txt");
+    	} catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	if(loadLevel(file)){
+            run();
         }else{
             Console.open("Error",3,17);
             Console.cursor(0,0);
@@ -34,9 +58,33 @@ public class Game {
             Console.print("\n NO MAP DETECTED ");
             Console.waitChar(0);
         }
-
+        
         Console.close();
-
+    }
+    
+    private void load(){
+    	InputStream file = getMapFile();
+    	
+    	if(loadLevel(file)){
+            run();
+        }else{
+            Console.open("Error",3,17);
+            Console.cursor(0,0);
+            Console.mouseClick(true);
+            Console.color(Console.WHITE,Console.RED);
+            Console.print("\n NO MAP DETECTED ");
+            Console.waitChar(0);
+        }
+        
+        Console.close();
+    }
+    
+    private void create(){
+    	FrameCreatorClass creator = new FrameCreatorClass();
+    	
+    	creator.dispose();
+    	
+    	menu();
     }
 
     public void run(){
@@ -75,7 +123,9 @@ public class Game {
 
     private void processClick(Location l){
         if(l.col>=0 && l.col<maxCols && l.lin>=0 && l.lin<maxLines) {               //Checks if the mouse click is within bounds
-            level.map.getPiece(l.lin / 3, l.col / 3).turn();                              //Turns the piece in those coordinates given by the mouse click
+            if(level.map.getPiece(l.lin / 3, l.col / 3) != null){
+            	level.map.getPiece(l.lin / 3, l.col / 3).turn();                             //Turns the piece in those coordinates given by the mouse click
+            }
         }
     }
 
@@ -99,13 +149,12 @@ public class Game {
 	    		fileName = frame.getMapFileName();
 	    		file = new FileInputStream(fileName);
 	    		b = true;
-	    	} catch(FileNotFoundException e){
 	    		frame.dispose();
-	    		frame = new FrameClass();
+	    	} catch(FileNotFoundException e){
+	    		frame.getContentPane().removeAll();
 	    		frame.mapNotFound(fileName);
 	    		b = false;
-	    		frame.dispose();
-	    		frame = new FrameClass();
+	    		frame.getContentPane().removeAll();
 	    	} catch(SecurityException e){
 	    		e.printStackTrace();
 	    	}

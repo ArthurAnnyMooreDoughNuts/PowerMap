@@ -1,10 +1,11 @@
 package frame;
 
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,11 +22,13 @@ public class FrameClass extends JFrame implements ActionListener{
 		super("PowerMap");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(false);
-		setResizable(true);
+		setResizable(false);
+		getRootPane().setBorder(BorderFactory.createMatteBorder(8, 8, 8, 8, Color.WHITE));
 	}
 	
 	public void resizeSmall(){
 		setSize(300, 150);
+		setResizable(false);
 		setLayout(new GridLayout(4, 1));
 	}
 	
@@ -66,7 +69,7 @@ public class FrameClass extends JFrame implements ActionListener{
 			}
 		}
 		
-		return fileName;
+		return fileName.concat(".pmm");
 	}
 	
 	public void mapNotFound(String text){
