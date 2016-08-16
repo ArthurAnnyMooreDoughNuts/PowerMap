@@ -11,6 +11,7 @@ public class GridClass extends PieceClass {
     private void create(char c) {
         switch (c){
             case 'c':
+            case 'C':
                 setDir(LEFT, true);
                 setDir(UP, true);
                 setDir(RIGHT, false);
@@ -20,6 +21,7 @@ public class GridClass extends PieceClass {
                 setDir(UP, false);
                 setDir(RIGHT, true);
                 break;
+            case 't':
             case 'T':
                 setDir(LEFT, true);
                 setDir(UP, true);
