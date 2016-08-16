@@ -19,17 +19,17 @@ public class GameView {
         for(int i = 0; i<lines; i++){
 
             for(int j = 0; j<cols; j++){
-                if (level.pieces[i][j] != null) {
+                if (level.map.getPiece(i, j) != null) {
 
-                    setColor(level.pieces[i][j].getSimb(), level.pieces[i][j].getPower());
+                    setColor(level.map.getPiece(i, j).getSimb(), level.map.getPiece(i, j).getPower());
                     x = i * 3;
                     y = j * 3;
                     Console.cursor(x + 1, y + 1);
-                    Console.print(level.pieces[i][j].getSimb());
+                    Console.print(level.map.getPiece(i, j).getSimb());
 
                     Console.cursor(x + 1, y);
-                    if (level.pieces[i][j].getDir(LEFT)) {
-                        setWireColor(level.pieces[i][j].getPower());
+                    if (level.map.getPiece(i, j).getDir(LEFT)) {
+                        setWireColor(level.map.getPiece(i, j).getPower());
                         Console.print('-');
                     }else {
                         Console.setBackground(Console.BLACK);
@@ -37,8 +37,8 @@ public class GameView {
                     }
 
                     Console.cursor(x, y + 1);
-                    if (level.pieces[i][j].getDir(UP)) {
-                        setWireColor(level.pieces[i][j].getPower());
+                    if (level.map.getPiece(i, j).getDir(UP)) {
+                        setWireColor(level.map.getPiece(i, j).getPower());
                         Console.print('|');
                     }else {
                         Console.setBackground(Console.BLACK);
@@ -46,8 +46,8 @@ public class GameView {
                     }
 
                     Console.cursor(x + 1, y + 2);
-                    if (level.pieces[i][j].getDir(RIGHT)) {
-                        setWireColor(level.pieces[i][j].getPower());
+                    if (level.map.getPiece(i, j).getDir(RIGHT)) {
+                        setWireColor(level.map.getPiece(i, j).getPower());
                         Console.print('-');
                     }else {
                         Console.setBackground(Console.BLACK);
@@ -55,8 +55,8 @@ public class GameView {
                     }
 
                     Console.cursor(x + 2, y + 1);
-                    if (level.pieces[i][j].getDir(DOWN)) {
-                        setWireColor(level.pieces[i][j].getPower());
+                    if (level.map.getPiece(i, j).getDir(DOWN)) {
+                        setWireColor(level.map.getPiece(i, j).getPower());
                         Console.print('|');
                     }else {
                         Console.setBackground(Console.BLACK);

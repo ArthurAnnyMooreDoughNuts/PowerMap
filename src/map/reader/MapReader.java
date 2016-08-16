@@ -33,12 +33,12 @@ public class MapReader {
 	}
 	
 	private void createMap(InputStream file){
-		Scanner input = new Scanner(file);
+ 		Scanner input = new Scanner(file);
         
 		try{
 			numLines = input.nextInt();
 			input.next();	
-			numCols = input.nextInt(); input.next();
+			numCols = input.nextInt(); input.nextLine(); 
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -73,6 +73,7 @@ public class MapReader {
 			case T_TYPE:
 			case T_TYPE_: ret = new GridClass(c); break;
 			case LINE: ret = new GridClass(c); break;
+			default: ret = null; break;
 		}
 		
 		return ret;

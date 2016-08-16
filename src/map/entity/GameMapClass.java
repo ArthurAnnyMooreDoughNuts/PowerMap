@@ -35,4 +35,8 @@ public class GameMapClass implements GameMap{
 		return numLines;
 	}
 	
+	public Piece getPiece(int i, int j){
+		return map.get(i).get(j);
+	}
+	
 }

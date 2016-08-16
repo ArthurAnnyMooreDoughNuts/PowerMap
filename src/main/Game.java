@@ -73,13 +73,13 @@ public class Game {
 
     private void processClick(Location l){
         if(l.col>=0 && l.col<maxCols && l.lin>=0 && l.lin<maxLines) {               //Checks if the mouse click is within bounds
-            level.pieces[l.lin / 3][l.col / 3].turn();                              //Turns the piece in those coordinates given by the mouse click
+            level.map.getPiece(l.lin / 3, l.col / 3).turn();                              //Turns the piece in those coordinates given by the mouse click
         }
     }
 
     private boolean loadLevel(String fileName) {
-        try (InputStream file = new FileInputStream(fileName)) {
-            level.load(file);
+        try{
+            level.load(fileName);
             return true;
         } catch (Exception e) {
             return false;
