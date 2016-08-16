@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import entities.LevelClass;
+import frame.FrameClass;
 import isel.leic.pg.Console;
 import isel.leic.pg.Location;
 
@@ -14,15 +15,13 @@ public class Game {
 
     private final LevelClass level = new LevelClass();
     private final GameView view = new GameView();
+    private FrameClass frame = new FrameClass();
 
     private int maxLines, maxCols;
 
     public static void main(String[] args){
         Game game = new Game();
-        InputStream file = null;
-        
-        //String fileName = game.getMapFile();
-        String fileName = "Map.txt";
+        InputStream file = game.getMapFile();
         
         
         if(game.loadLevel(file)){
@@ -90,17 +89,28 @@ public class Game {
     }
     
     private InputStream getMapFile(){
-    	String fileName = null;
+    	String fileName = "";
     	InputStream file = null;
     	
-    	try {
-    		file = new FileInputStream(fileName);
-    	} catch(FileNotFoundException e){
-    		//THAT MAP DOES NOT EXIST
-    	} catch(SecurityException e){
-    		e.printStackTrace();
-    	}
+    	boolean b = false;
     	
+    	while(!b){
+	    	try {
+	    		fileName = frame.getMapFileName();
+	    		file = new FileInputStream(fileName);
+	    		b = true;
+	    	} catch(FileNotFoundException e){
+	    		frame.dispose();
+	    		frame = new FrameClass();
+	    		frame.mapNotFound(fileName);
+	    		b = false;
+	    		frame.dispose();
+	    		frame = new FrameClass();
+	    	} catch(SecurityException e){
+	    		e.printStackTrace();
+	    	}
+    	}
+	    	
     	return file;
     	
     }
