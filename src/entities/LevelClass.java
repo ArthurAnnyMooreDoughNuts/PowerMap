@@ -1,8 +1,6 @@
 package entities;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.Scanner;
 
 import map.entity.GameMap;
 import map.reader.MapReader;
@@ -15,8 +13,8 @@ public class LevelClass {
     private int maxLines = 0, maxCols = 0;
     public GameMap map;
 
-    public void load(String fileName) throws FileNotFoundException, SecurityException {
-    	MapReader read = new MapReader(fileName);
+    public void load(InputStream file) {
+    	MapReader read = new MapReader(file);
     	map = read.getMap();
     	maxLines = map.getNumLines();
     	maxCols = map.getNumCols();
@@ -68,7 +66,7 @@ public class LevelClass {
     public boolean checkPower(){                                                                               //Verifica se todas as casas têm energia, se sim retorna True
         for(int i = 0; i < maxLines; i++){
             for (int j = 0; j < maxCols; j++){
-                if (map.getPiece(i, j) !=null  && map.getPiece(i, j).getSimb()=='H' && !map.getPiece(i, j).getPower()){
+                if (map.getPiece(i, j) != null  && map.getPiece(i, j).getSimb() == 'H' && !map.getPiece(i, j).getPower()){
                     return false;
                 }
             }
