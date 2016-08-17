@@ -32,12 +32,12 @@ public class GameMapClass implements GameMap{
 	}
 	
 	public void genCables(int[] posP, int[][] posH, int nHouse){
-		
+
 		boolean connected;
 		int nCable = 0;
 		char[][] cables = new char[numLines*numCols - nHouse - 1][3];
 		int x = posP[0], y = posP[1];
-		
+		/*
 		for(int i = 0; i<nHouse; i++){
 			connected = false;
 			
@@ -78,6 +78,8 @@ public class GameMapClass implements GameMap{
 				}
 			}
 		}
+		*/
+		setGenMap(posP, posH, nHouse, cables, nCable);
 	}
 	
 	private static int setXY(char[][] cables, int nCable){
@@ -86,14 +88,20 @@ public class GameMapClass implements GameMap{
 	
 	private void setGenMap(int[] posP, int[][] posH, int nHouse, char[][] cables, int nCable){
 		
-		map.get(posP[0]).add(posP[1], new PowerClass());
+		Piece table[][] = new Piece[numLines][numCols];
+		
+		table[ posP[0] ][ posP[1] ] = new PowerClass();
 		
 		for(int i = 0; i<nHouse; i++){
-			map.get(posH[i][0]).add(posH[i][1], new HouseClass());
+			table[ posH[i][0] ][ posH[i][1] ] = new HouseClass();
 		}
 		
 		for(int i = 0; i<nCable; i++){
-			map.get( cables[i][0] ).add( cables[i][1], new GridClass( cables[i][2] ) );
+			table[ cables[i][0] ][ cables[i][1] ]= new GridClass( cables[i][2] ) ;
+		}
+		
+		for(int i = 0; i< numLines; i++){
+			populateLine(table[i]);
 		}
 	}
 	

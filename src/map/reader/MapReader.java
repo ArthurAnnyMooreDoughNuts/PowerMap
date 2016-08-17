@@ -90,7 +90,7 @@ public class MapReader {
 		
 		map = new GameMapClass(numCols, numLines);
 		
-		int nHouse = (int)( Math.pow( numLines*numCols, 2 ) / 5 );
+		int nHouse = numLines*numCols / 5 ;
 		int posH[][] = new int[nHouse][2];
 		int posP[] = new int[2];
 		

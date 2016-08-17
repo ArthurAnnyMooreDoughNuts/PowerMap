@@ -19,6 +19,13 @@ public class LevelClass {
     	maxLines = map.getNumLines();
     	maxCols = map.getNumCols();
     }
+    
+    public void load() {
+    	MapReader read = new MapReader();
+    	map = read.getMap();
+    	maxLines = map.getNumLines();
+    	maxCols = map.getNumCols();
+    }
 
     private void updatePowerLine(int i, int j){                                                                //Este metodo faz update da energia nas peças atraves de ramos, começando na fonte
 
