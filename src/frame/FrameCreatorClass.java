@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,19 +18,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
-public class FrameCreatorClass extends JFrame implements ActionListener {
+public class FrameCreatorClass extends JFrame implements ActionListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	
 	private static final String HOUSE = "H";
 	private static final String POWER = "P";
-	private static final String ELBOW = "ELBOW";
+	private static final String CORNER = "CORNER";
 	private static final String T_TYPE = "T TYPE";
 	private static final String LINE = "LINE";
 	private static final String NONE = "";
 	
-	
+	private int[] locationButton;
 	private ArrayList<ArrayList<JButton>> buttons;
+	private JButton selectedButton;
 	private boolean save = false;
 	private String fileName = "";
 	
@@ -56,13 +59,17 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 			
 			for(int j = 0; j < c; j++){
 				JButton button = new JButton("");
+				button.addKeyListener(this);
 				button.addActionListener(this);
+				button.setBackground(Color.WHITE);
 				line.add(button);
 				add(button);
 			}
 			
 			buttons.add(line);	
 		}
+		
+		selectedButton = buttons.get(0).get(0);
 		
 		JButton saveButton = new JButton("SAVE");
 		add(saveButton, (l*c));
@@ -73,6 +80,8 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 				save = true;
 			}
 		});
+		
+		loadAppearance();
 		
 		setVisible(true);
 		
@@ -87,7 +96,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		
 	}
 	
-	public int[] getNumElements(){
+	private int[] getNumElements(){
 		setSize(300, 150);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(false);
@@ -163,7 +172,13 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		return elements;
 	}
 	
-	
+	private void loadAppearance(){
+		selectedButton = buttons.get(0).get(0);
+		selectedButton.setBackground(Color.RED);
+		locationButton = new int[2];
+		locationButton[0] = 0;
+		locationButton[1] = 0;
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -173,8 +188,8 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 			case "": button.setText("H"); break;
 			case "H": button.setText("P"); break;
 			case "P": button.setText("LINE"); break;
-			case "LINE": button.setText("ELBOW"); break;
-			case "ELBOW": button.setText("T TYPE"); break;
+			case "LINE": button.setText("CORNER"); break;
+			case "CORNER": button.setText("T TYPE"); break;
 			case "T TYPE": button.setText(""); break;
 		}
 	}
@@ -187,8 +202,6 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		setLayout(new GridLayout(3, 1));
 		getRootPane().setBorder(BorderFactory.createMatteBorder(8, 8, 8, 8, Color.WHITE));
 		getContentPane().removeAll();
-		
-		
 		
 		JLabel saveAs = new JLabel("Save as:");
 		add(saveAs);
@@ -248,7 +261,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		switch(str){
 			case HOUSE: return 'H';
 			case POWER: return 'P';
-			case ELBOW: return 'C';
+			case CORNER: return 'C';
 			case T_TYPE: return 'T';
 			case LINE: return '.';
 			case NONE: return ' ';
@@ -256,6 +269,81 @@ public class FrameCreatorClass extends JFrame implements ActionListener {
 		
 		return 'E';
 		
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int id = e.getID();
+		
+		if(id == KeyEvent.KEY_PRESSED){
+			int c = e.getKeyCode();
+			switch(c){
+				case KeyEvent.VK_UP:
+				case KeyEvent.VK_NUMPAD8:
+				case KeyEvent.VK_W: moveSelectedUp(); break;
+				case KeyEvent.VK_DOWN:
+				case KeyEvent.VK_NUMPAD2:
+				case KeyEvent.VK_S: moveSelectedDown(); break;
+				case KeyEvent.VK_LEFT:
+				case KeyEvent.VK_NUMPAD4:
+				case KeyEvent.VK_A: moveSelectedLeft(); break;
+				case KeyEvent.VK_RIGHT:
+				case KeyEvent.VK_NUMPAD6:
+				case KeyEvent.VK_D: moveSelectedRight(); break;
+				case KeyEvent.VK_P: selectedButton.setText(POWER); break;
+				case KeyEvent.VK_C: selectedButton.setText(CORNER); break;
+				case KeyEvent.VK_T: selectedButton.setText(T_TYPE); break;
+				case KeyEvent.VK_H: selectedButton.setText(HOUSE); break;
+				case KeyEvent.VK_L: selectedButton.setText(LINE); break;
+				case KeyEvent.VK_SPACE: selectedButton.setText(NONE); break;
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+	}
+	
+	private void moveSelectedUp(){
+		if(!(locationButton[0] == 0)){
+			selectedButton.setBackground(Color.WHITE);
+			locationButton[0]--;
+			selectedButton = buttons.get(locationButton[0]).get(locationButton[1]);
+			selectedButton.setBackground(Color.RED);
+		}
+	}
+	
+	private void moveSelectedDown(){
+		if(!(locationButton[0] == (buttons.size()-1))){
+			selectedButton.setBackground(Color.WHITE);
+			locationButton[0]++;
+			selectedButton = buttons.get(locationButton[0]).get(locationButton[1]);
+			selectedButton.setBackground(Color.RED);
+		}
+	}
+	
+	private void moveSelectedLeft(){
+		if(!(locationButton[1] == 0)){
+			selectedButton.setBackground(Color.WHITE);
+			locationButton[1]--;
+			selectedButton = buttons.get(locationButton[0]).get(locationButton[1]);
+			selectedButton.setBackground(Color.RED);
+		}
+	}
+	
+	private void moveSelectedRight(){
+		if(!(locationButton[1] == (buttons.get(0).size() - 1))){
+			selectedButton.setBackground(Color.WHITE);
+			locationButton[1]++;
+			selectedButton = buttons.get(locationButton[0]).get(locationButton[1]);
+			selectedButton.setBackground(Color.RED);
+		}
 	}
 	
 }
