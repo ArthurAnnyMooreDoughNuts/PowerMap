@@ -41,6 +41,8 @@ public class FrameClass extends JFrame implements ActionListener{
 	public String getMapFileName(){
 		fileName = "";
 		
+		getContentPane().removeAll();
+		
 		resizeSmall();
 		
 		JLabel label = new JLabel("File Name: ");
