@@ -29,7 +29,7 @@ public class FrameMenuClass extends JFrame implements ActionListener{
 		option = 0;
 		
 		setSize(500, 400);
-		setLayout(new GridLayout(3, 1));
+		setLayout(new GridLayout(4, 0));
 		
 		JButton play = new JButton("Play");
 		add(play);
@@ -38,6 +38,10 @@ public class FrameMenuClass extends JFrame implements ActionListener{
 		JButton load = new JButton("Load Map");
 		add(load);
 		load.addActionListener(this);
+		
+		JButton edit = new JButton("Edit Map");
+		add(edit);
+		edit.addActionListener(this);
 		
 		JButton create = new JButton("Create Map");
 		add(create);
@@ -59,7 +63,8 @@ public class FrameMenuClass extends JFrame implements ActionListener{
 		switch(e.getActionCommand()){
 			case "Play": option = 1; break;
 			case "Load Map": option = 2; break;
-			case "Create Map": option = 3; break;
+			case "Edit Map": option = 3; break;
+			case "Create Map": option = 4; break;
 		}
 	}
 

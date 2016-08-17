@@ -9,21 +9,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class FrameCreatorClass extends JFrame implements ActionListener, KeyListener{
+public class FrameEditorClass extends JFrame implements ActionListener, KeyListener{
 
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	private static final String HOUSE = "H";
 	private static final String POWER = "P";
@@ -32,6 +33,13 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 	private static final String LINE = "LINE";
 	private static final String NONE = "";
 	
+	private static final char HOUSE_ = 'H';
+	private static final char POWER_ = 'P';
+	private static final char CORNER_ = 'C';
+	private static final char T_TYPE_ = 'T';
+	private static final char LINE_ = '.';
+	private static final char NONE_ = ' ';
+	
 	private int[] locationButton;
 	private ArrayList<ArrayList<JButton>> buttons;
 	private JButton selectedButton;
@@ -39,16 +47,25 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 	private String fileName = "";
 	private JPanel[][] panelHolder;
 	
-	public FrameCreatorClass(){
-		super("PowerMap Creator");
+	public FrameEditorClass(InputStream file){
+		super("PowerMap Editor");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(false);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		int[] nums = getNumElements();
-		int l = nums[0];
-		int c = nums[1];
+		Scanner input = new Scanner(file);
+		
+		int l = 0;
+		int c = 0;
+		
+		try{
+			l = input.nextInt();
+			input.next();	
+			c = input.nextInt(); input.nextLine(); 
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		setLayout(new GridLayout(l+1, c));
 		
@@ -63,11 +80,15 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 		buttons = new ArrayList<ArrayList<JButton>>();
 		populatePanelHolder(l+1, c);
 		
+		
 		for(int i = 0; i < l; i++){
 			ArrayList<JButton> line = new ArrayList<JButton>();
+			String lineText = input.nextLine();
 			
 			for(int j = 0; j < c; j++){
-				JButton button = new JButton("");
+				
+				JButton button = new JButton();
+				button.setText(resolveChar(lineText.charAt(j)));
 				button.addKeyListener(this);
 				button.addActionListener(this);
 				button.setBackground(Color.WHITE);
@@ -106,6 +127,8 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 		
 		saveMap();
 		
+		input.close();
+		
 	}
 	
 	private void populatePanelHolder(int i , int j){
@@ -117,82 +140,6 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 		      getContentPane().add(panelHolder[m][n], BorderLayout.CENTER);
 		   }
 		}
-	}
-	
-	private int[] getNumElements(){
-		setSize(300, 150);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(false);
-		setResizable(false);
-		getRootPane().setBorder(BorderFactory.createMatteBorder(8, 8, 8, 8, Color.WHITE));
-		setLayout(new GridLayout(3, 1));
-		
-		int[] elements = new int[2];
-		elements[0] = 0;
-		elements[1] = 0;
-		
-		Integer[] nums = new Integer[10];
-		
-		for(int i = 1; i < 11; i++){
-			nums[i-1] = new Integer(i);
-		}
-		
-		JLabel label = new JLabel("Lines: (min 4)");
-		add(label);
-		
-		JComboBox<Integer> cols = new JComboBox<Integer>(nums);
-		cols.setEditable(false);
-		add(cols);
-		
-		JButton confirm = new JButton("Confirm");
-		add(confirm);
-		confirm.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				elements[0] = ((Integer)(cols.getSelectedItem())).intValue();
-			}
-		});
-		
-		setVisible(true);
-		
-		while(elements[0] < 4){
-			try{
-				Thread.sleep(200);
-			} catch(InterruptedException e){
-			}
-		}
-		
-		setVisible(false);
-		getContentPane().removeAll();
-		
-		label.setText("Columns: (min 4)");
-		add(label);
-		
-		JComboBox<Integer> lines = new JComboBox<Integer>(nums);
-		lines.setEditable(false);
-		add(lines);
-		
-		JButton confirm2 = new JButton("Confirm");
-		add(confirm2);
-		confirm2.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				elements[1] = ((Integer)(lines.getSelectedItem())).intValue();
-			}
-		});
-		
-		setVisible(true);
-		
-		while(elements[1] < 4){
-			try{
-				Thread.sleep(200);
-			} catch(InterruptedException e){
-			}
-		}
-		
-		return elements;
 	}
 	
 	private void loadAppearance(){
@@ -367,6 +314,19 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 			selectedButton = buttons.get(locationButton[0]).get(locationButton[1]);
 			selectedButton.setBackground(Color.RED);
 		}
+	}
+	
+	private String resolveChar(char c){
+		switch(c){
+			case HOUSE_: return HOUSE;
+			case POWER_: return POWER;
+			case CORNER_: return CORNER;
+			case T_TYPE_: return T_TYPE;
+			case LINE_: return LINE;
+			case NONE_: return NONE;
+		}
+	
+		return "E";
 	}
 	
 }
