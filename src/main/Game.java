@@ -42,22 +42,8 @@ public class Game {
     private void play(){
     	InputStream file = null;
     	
-    	try{
-    		file = new FileInputStream("Map.txt");
-    	} catch(Exception e){
-    		e.printStackTrace();
-    	}
-    	
-    	if(loadLevel(file)){
-            run();
-        }else{
-            Console.open("Error",3,17);
-            Console.cursor(0,0);
-            Console.mouseClick(true);
-            Console.color(Console.WHITE,Console.RED);
-            Console.print("\n NO MAP DETECTED ");
-            Console.waitChar(0);
-        }
+    	level.load();
+    	run();
         
         Console.close();
     }
