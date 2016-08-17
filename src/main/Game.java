@@ -8,6 +8,7 @@ import java.io.InputStream;
 import entities.LevelClass;
 import frame.FrameClass;
 import frame.FrameCreatorClass;
+import frame.FrameEditorClass;
 import frame.FrameMenuClass;
 import isel.leic.pg.Console;
 import isel.leic.pg.Location;
@@ -34,14 +35,13 @@ public class Game {
     	switch(option){
     		case 1: play(); break;
     		case 2: load(); break;
-    		case 3: create(); break;
+    		case 3: edit(); break;
+    		case 4: create(); break;
     	}
     	
     }
     
     private void play(){
-    	InputStream file = null;
-    	
     	level.load();
     	run();
         
@@ -63,6 +63,14 @@ public class Game {
         }
         
         Console.close();
+    }
+    
+    private void edit(){
+    	FrameEditorClass editor = new FrameEditorClass(getMapFile());
+    	
+    	editor.dispose();
+    	
+    	menu();
     }
     
     private void create(){
