@@ -46,7 +46,6 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 		setVisible(false);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setBounds(100, 100, 450, 300);
 		
 		int[] nums = getNumElements();
 		int l = nums[0];
