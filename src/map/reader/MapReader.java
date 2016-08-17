@@ -100,7 +100,7 @@ public class MapReader {
 			do{
 				x = (int)(Math.random()*10%numLines);
 				y = (int)(Math.random()*10%numCols);
-			}while(!empty(posH,i,x,y));
+			}while( !empty(posH,i,x,y) && !space(posH,i,x,y) );
 			
 			posH[i][0] = x;
 			posH[i][1] = y;
@@ -109,11 +109,11 @@ public class MapReader {
 		do{
 			x = (int)(Math.random()*10%numLines);
 			y = (int)(Math.random()*10%numCols);
-		}while(!empty(posH,nHouse,x,y));
+		}while(!empty(posH,nHouse,x,y) && !space(posH,nHouse,x,y));
 		posP[0] = x;
 		posP[1] = y;
 		
-		map.genCables(posP, posH, nHouse);
+		map.placePieces(posP, posH, nHouse);
 	}
 	
 	private static boolean empty(int[][] posH, int i, int x, int y){
@@ -121,6 +121,17 @@ public class MapReader {
 		for(int k = 0; k<i; k++){
 			if(posH[k][0]==x && posH[k][1]==y){
 				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private static boolean space(int[][] posH, int i, int x, int y){
+		
+		for(int k = 0; k < i-1; k++){
+			if( !empty(posH, i, x + 1, y) || !empty(posH, i, x - 1, y) || !empty(posH, i, x, y + 1) || !empty(posH, i, x, y - 1) ){
+				return false; 
 			}
 		}
 		
