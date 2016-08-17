@@ -1,6 +1,8 @@
 package frame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 
 public class FrameCreatorClass extends JFrame implements ActionListener, KeyListener{
@@ -34,6 +38,7 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 	private JButton selectedButton;
 	private boolean save = false;
 	private String fileName = "";
+	private JPanel[][] panelHolder;
 	
 	public FrameCreatorClass(){
 		super("PowerMap Creator");
@@ -41,18 +46,24 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 		setVisible(false);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setBounds(100, 100, 450, 300);
 		
 		int[] nums = getNumElements();
 		int l = nums[0];
 		int c = nums[1];
-
+		
+		setLayout(new GridLayout(l+1, c));
+		
+		panelHolder = new JPanel[l+1][c];
+		
+		
 		getContentPane().removeAll();
 		
 		setSize(600, 600);
-		setLayout(new GridLayout((l+1), c));
 		setResizable(true);
 		
 		buttons = new ArrayList<ArrayList<JButton>>();
+		populatePanelHolder(l+1, c);
 		
 		for(int i = 0; i < l; i++){
 			ArrayList<JButton> line = new ArrayList<JButton>();
@@ -62,8 +73,9 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 				button.addKeyListener(this);
 				button.addActionListener(this);
 				button.setBackground(Color.WHITE);
+				button.setMinimumSize(new Dimension(100, 100));
 				line.add(button);
-				add(button);
+				panelHolder[i][j].add(button);
 			}
 			
 			buttons.add(line);	
@@ -71,8 +83,10 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 		
 		selectedButton = buttons.get(0).get(0);
 		
+		
+		
 		JButton saveButton = new JButton("SAVE");
-		add(saveButton, (l*c));
+		panelHolder[l][0].add(saveButton);
 		saveButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -94,6 +108,17 @@ public class FrameCreatorClass extends JFrame implements ActionListener, KeyList
 		
 		saveMap();
 		
+	}
+	
+	private void populatePanelHolder(int i , int j){
+		for(int m = 0; m < i; m++) {
+		   for(int n = 0; n < j; n++) {
+			  JPanel panel = new JPanel();
+			  panel.setLayout(new BorderLayout(0, 0));
+		      panelHolder[m][n] = panel;
+		      getContentPane().add(panelHolder[m][n], BorderLayout.CENTER);
+		   }
+		}
 	}
 	
 	private int[] getNumElements(){
