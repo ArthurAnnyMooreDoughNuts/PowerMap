@@ -1,7 +1,11 @@
 package map.entity;
 
 import java.util.ArrayList;
+
+import entities.GridClass;
+import entities.HouseClass;
 import entities.Piece;
+import entities.PowerClass;
 
 
 public class GameMapClass implements GameMap{
@@ -29,7 +33,6 @@ public class GameMapClass implements GameMap{
 	
 	public void genCables(int[] posP, int[][] posH, int nHouse){
 		
-		boolean corner = false;
 		boolean connected;
 		int nCable = 0;
 		char[][] cables = new char[numLines*numCols - nHouse - 1][3];
@@ -70,18 +73,28 @@ public class GameMapClass implements GameMap{
 					nCable++;
 				}else{
 					connected = true;
-					x = setX(cables, nCable);
-					y = setY(cables, nCable);
+					x = setXY(cables, nCable);
+					y = setXY(cables, nCable);
 				}
 			}
 		}
 	}
 	
-	private static int setX(char[][] cables, int nCable){
+	private static int setXY(char[][] cables, int nCable){
 		return 0;
 	}
-	private static int setY(char[][] cables, int nCable){
-		return 0;
+	
+	private void setGenMap(int[] posP, int[][] posH, int nHouse, char[][] cables, int nCable){
+		
+		map.get(posP[0]).add(posP[1], new PowerClass());
+		
+		for(int i = 0; i<nHouse; i++){
+			map.get(posH[i][0]).add(posH[i][1], new HouseClass());
+		}
+		
+		for(int i = 0; i<nCable; i++){
+			map.get( cables[i][0] ).add( cables[i][1], new GridClass( cables[i][2] ) );
+		}
 	}
 	
 	public int getNumCols(){
